@@ -3,8 +3,12 @@ CARTON ?= carton
 
 all: test
 
-test:
-	${CARTON} exec test/f-test
+test: unit
+
+test-compiled: compile unit clean-elc
+
+unit:
+	${CARTON} exec ert-runner run -l test/ert-loader.el
 
 docs:
 	${CARTON} exec bin/make-docs
@@ -15,4 +19,4 @@ compile:
 clean-elc:
 	rm f.elc
 
-.PHONY:	all test docs
+.PHONY:	all test docs unit compile clean-elc test-compiled
